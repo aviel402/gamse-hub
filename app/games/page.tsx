@@ -1,113 +1,141 @@
-
-// app/games/page.tsx
+// app/page.tsx
 import Link from 'next/link';
 
 const games = [
   {
     id: 1,
-    title: "🐯 Tiger Simulator 3D",
+    emoji: "🐯",
+    title: "Tiger Simulator 3D",
     slug: "tiger-simulator",
-    url: "https://html5.gamedistribution.com/3e8831ba57bb4b559f8a84e95f7698fc/",
-    description: "סימולטור טיגריס מרהיב בעולם פתוח",
+    description: "הפוך לטיגריס ושרוד בטבע הפראי",
     category: "סימולציה",
-    heightRatio: 65,   // אחוז גובה יחסי
+    color: "#22ff88"
   },
   {
     id: 2,
-    title: "🔥 Pokémon Emerald DX Beta",
+    emoji: "🔥",
+    title: "Pokémon Emerald DX",
     slug: "pokemon-emerald",
-    url: "https://www.retrogames.cc/embed/42902-pokemon-emerald-dx-beta-v0-5.html",
-    description: "גרסת beta משופרת של פוקימון אמרלד",
-    category: "RPG / רטרו",
-    heightRatio: 75,
+    description: "גרסה משופרת של פוקימון אמרלד",
+    category: "RPG • רטרו",
+    color: "#ff4444"
   },
-  // ← כאן תוסיף משחקים חדשים בקלות
+  // הוסף כאן משחקים נוספים
 ];
 
-export default function GamesPage() {
+export default function Home() {
   return (
-    <div style={{ 
-      fontFamily: 'system-ui, Arial, sans-serif',
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '20px'
+    <div style={{
+      background: '#0a0a0a',
+      color: '#fff',
+      minHeight: '100vh',
+      fontFamily: 'system-ui, Arial, sans-serif'
     }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '40px', color: '#333' }}>
-        🎮 משחקים שלי
-      </h1>
-
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-        gap: '25px'
+      {/* Header */}
+      <header style={{
+        background: '#111',
+        padding: '20px 0',
+        textAlign: 'center',
+        borderBottom: '2px solid #333'
       }}>
-        {games.map((game) => (
-          <div key={game.id} style={{
-            border: '1px solid #ddd',
-            borderRadius: '16px',
-            overflow: 'hidden',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.1)',
-            background: 'white'
-          }}>
-            <div style={{
-              position: 'relative',
-              paddingBottom: `${game.heightRatio}%`,
-              height: 0,
-              background: '#111',
-            }}>
-              <iframe
-                src={game.url}
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%',
-                  border: 'none'
-                }}
-                allowFullScreen
-                scrolling="no"
-                title={game.title}
-              />
-            </div>
+        <h1 style={{ 
+          fontSize: '3rem', 
+          margin: '0',
+          background: 'linear-gradient(90deg, #22ff88, #4488ff)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
+          🎮 ARCADE STATION
+        </h1>
+        <p style={{ margin: '8px 0 0', color: '#aaa', fontSize: '1.2rem' }}>
+          משחקים חינם • בלי הורדות
+        </p>
+      </header>
 
-            <div style={{ padding: '18px' }}>
-              <h3 style={{ margin: '0 0 8px 0' }}>{game.title}</h3>
-              <p style={{ margin: '0 0 12px 0', color: '#555', fontSize: '15px' }}>
-                {game.description}
-              </p>
-              <div style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center' 
-              }}>
-                <span style={{ 
-                  background: '#f0f0f0', 
-                  padding: '4px 12px', 
-                  borderRadius: '20px',
-                  fontSize: '14px'
-                }}>
-                  {game.category}
-                </span>
+      <div style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 20px' }}>
+        <h2 style={{ textAlign: 'center', marginBottom: '40px', fontSize: '2.2rem' }}>
+          בחר משחק ותתחיל לשחק 🔥
+        </h2>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gap: '24px'
+        }}>
+          {games.map((game) => (
+            <Link 
+              key={game.id} 
+              href={`/play/${game.slug}`}
+              style={{ textDecoration: 'none', color: 'inherit' }}
+            >
+              <div style={{
+                background: '#1a1a1a',
+                borderRadius: '16px',
+                padding: '20px',
+                border: `2px solid ${game.color}33`,
+                transition: 'all 0.3s',
+                cursor: 'pointer'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-8px)';
+                e.currentTarget.style.boxShadow = `0 20px 30px ${game.color}22`;
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+              >
+                <div style={{ fontSize: '4rem', marginBottom: '16px' }}>
+                  {game.emoji}
+                </div>
                 
-                <Link 
-                  href={`/play/${game.slug}`}
-                  style={{
-                    background: '#0066ff',
-                    color: 'white',
-                    padding: '10px 20px',
+                <h3 style={{ margin: '0 0 10px 0', fontSize: '1.5rem' }}>
+                  {game.title}
+                </h3>
+                
+                <p style={{ color: '#bbb', margin: '0 0 16px 0', lineHeight: '1.5' }}>
+                  {game.description}
+                </p>
+                
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}>
+                  <span style={{
+                    background: '#333',
+                    padding: '6px 14px',
+                    borderRadius: '30px',
+                    fontSize: '0.9rem'
+                  }}>
+                    {game.category}
+                  </span>
+                  
+                  <span style={{
+                    background: game.color,
+                    color: '#000',
+                    padding: '10px 24px',
                     borderRadius: '8px',
-                    textDecoration: 'none',
                     fontWeight: 'bold'
-                  }}
-                >
-                  שחק עכשיו →
-                </Link>
+                  }}>
+                    שחק עכשיו →
+                  </span>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </Link>
+          ))}
+        </div>
       </div>
+
+      {/* Footer */}
+      <footer style={{
+        textAlign: 'center',
+        padding: '40px 20px',
+        color: '#666',
+        marginTop: '80px'
+      }}>
+        Arcade Station © 2026 • כל הזכויות שמורות
+      </footer>
     </div>
   );
 }

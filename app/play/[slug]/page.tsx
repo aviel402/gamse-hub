@@ -2,31 +2,32 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
-const gamesData: any = {
+const gameList: any = {
   "tiger-simulator": {
     title: "🐯 Tiger Simulator 3D",
     url: "https://html5.gamedistribution.com/3e8831ba57bb4b559f8a84e95f7698fc/",
-    ratio: 65,
+    ratio: 65
   },
   "pokemon-emerald": {
     title: "🔥 Pokémon Emerald DX Beta",
     url: "https://www.retrogames.cc/embed/42902-pokemon-emerald-dx-beta-v0-5.html",
-    ratio: 75,
-  },
+    ratio: 75
+  }
 };
 
-export default function PlayPage() {
+export default function PlayGame() {
   const params = useParams();
   const slug = params.slug as string;
-  const game = gamesData[slug];
+  const game = gameList[slug];
 
-  if (!game) return <h1>משחק לא נמצא</h1>;
+  if (!game) {
+    return <h1 style={{color: 'white', textAlign: 'center', padding: '100px'}}>משחק לא נמצא 😕</h1>;
+  }
 
   return (
-    <div style={{ padding: '20px', textAlign: 'center', background: '#f9f9f9', minHeight: '100vh' }}>
-      <h1 style={{ marginBottom: '30px' }}>{game.title}</h1>
+    <div style={{ background: '#0a0a0a', color: '#fff', minHeight: '100vh', padding: '20px' }}>
+      <h1 style={{ textAlign: 'center', marginBottom: '30px' }}>{game.title}</h1>
       
       <div style={{
         position: 'relative',
@@ -36,37 +37,13 @@ export default function PlayPage() {
         height: 0,
         background: '#000',
         borderRadius: '12px',
-        overflow: 'hidden',
-        boxShadow: '0 15px 40px rgba(0,0,0,0.25)'
+        overflow: 'hidden'
       }}>
         <iframe
           src={game.url}
-          style={{
-            position: 'absolute',
-            top: 0, left: 0,
-            width: '100%', height: '100%',
-            border: 'none'
-          }}
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
           allowFullScreen
-          scrolling="no"
         />
-      </div>
-
-      <div style={{ marginTop: '30px' }}>
-        <button 
-          onClick={() => window.open(game.url, '_blank')}
-          style={{
-            padding: '14px 32px',
-            fontSize: '18px',
-            background: '#ff4444',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer'
-          }}
-        >
-          ▶️ פתח במסך מלא (חלון חדש)
-        </button>
       </div>
     </div>
   );
